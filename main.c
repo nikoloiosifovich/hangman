@@ -158,6 +158,16 @@ void v_buttons(BITMAP *buffer, BITMAP *buttons[], int start_x, int start_y){
   }
 }
 
+// --> ToDrawHangman
+void v_sprites(BITMAP *buffer, BITMAP *sprites[]){
+
+  draw_sprite(buffer, sprites[0], sprites[2]->cr, sprites[0]->ct);
+  draw_sprite(buffer, sprites[1], sprites[2]->cr, sprites[0]->cb);
+  draw_sprite(buffer, sprites[2], sprites[2]->cl, sprites[0]->cb);
+  draw_sprite(buffer, sprites[3], sprites[0]->cr+sprites[2]->cr, sprites[0]->cb);
+  draw_sprite(buffer, sprites[4], sprites[2]->cr/2, sprites[0]->cb+sprites[1]->cb);
+  draw_sprite(buffer, sprites[5], sprites[2]->cr/2+sprites[4]->cr, sprites[0]->cb+sprites[1]->cb);
+}
 
 // --> Main Game
 int main(){
@@ -183,6 +193,7 @@ int main(){
 
     v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
     v_buttons(buffer, buttons, posX_button, posY_button);
+    v_sprites(buffer, sprites);
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
     update_screen(buffer);
