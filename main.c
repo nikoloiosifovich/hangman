@@ -188,6 +188,48 @@ void interactions_mouse_v_keyboard(BITMAP *keys[], int sta_keys[][9], int start_
   }
 }
 
+// --> StartBlockOfFunctionsToUseFile
+FILE *words;
+
+char words_file[12] = { "wordlist.txt" };
+char reg, word[10];
+int word_id, r_index;
+int n_index = 0;
+
+void read_reg(FILE *arq){
+  // --> This go to next line on file
+
+  reg = fscanf(arq, "%d %s", &word_id, &word);
+}
+
+void words_index(){
+  // --> This get the number of lines on file
+
+  words = fopen(words_file, "r");
+  read_reg(words);
+
+  while(reg != EOF){
+    n_index++;
+    read_reg(words);
+  }
+  fclose(words);
+}
+
+void search(int n){
+  // --> This search the word by index
+
+  words = fopen(words_file, "r");
+  read_reg(words);
+
+  while(reg != EOF){
+    if(word_id == n){
+      break;
+    }
+    read_reg(words);
+  }
+  fclose(words);
+}
+
 // --> Main Game
 int main(){
 
@@ -231,11 +273,13 @@ int main(){
       interactions_mouse_v_keyboard(keys, sta_keys, posX_keyboard, posY_keyboard);
       v_sprites(buffer, sprites);
       v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
+
+
     }else if(status_screen == 2){
       // --> screen_2: credts["Staff"]
       
       clear(buffer);
-      draw_sprite(buffer, backgrounds[1], 2, 2); // I'll change this for credts_screen
+      draw_sprite(buffer, backgrounds[1], 2, 2); // I'll change this for credts_img
     }
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
