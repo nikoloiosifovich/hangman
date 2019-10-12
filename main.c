@@ -144,6 +144,21 @@ void v_keyboard(BITMAP *buffer, BITMAP *keys[], int start_x, int start_y){
   }
 }
 
+// --> ToDrawButtonsWithMouseHoverEffect
+void v_buttons(BITMAP *buffer, BITMAP *buttons[], int start_x, int start_y){
+
+  for(i=0;i<2;i++){
+    if(mouse_x>start_x && mouse_x<start_x+150 &&
+       mouse_y>start_y+45*i && mouse_y<start_y+40+(45*i)){
+
+      draw_sprite(buffer, buttons[i+2], start_x, start_y+(45*i));
+    }else{
+      draw_sprite(buffer, buttons[i], start_x, start_y+(45*i));
+    }
+  }
+}
+
+
 // --> Main Game
 int main(){
 
@@ -151,6 +166,7 @@ int main(){
 
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
   int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
+  int posX_button = 0, posY_button = 0;
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
@@ -166,6 +182,7 @@ int main(){
     if(key[KEY_ESC]){ end(); }
 
     v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
+    v_buttons(buffer, buttons, posX_button, posY_button);
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
     update_screen(buffer);
