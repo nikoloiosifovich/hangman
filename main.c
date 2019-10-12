@@ -12,7 +12,7 @@
 // Global vars
 int i, j;
 int done = 0;
-int status_screen = 1;
+int status_screen = 2;
 
 // Functions
 // --> ToCloseGame
@@ -230,6 +230,11 @@ int main(){
       interactions_mouse_v_keyboard(keys, sta_keys, posX_keyboard, posY_keyboard);
       v_sprites(buffer, sprites);
       v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
+    }else if(status_screen == 2){
+      // --> screen_2: credts["Staff"]
+      
+      clear(buffer);
+      draw_sprite(buffer, backgrounds[1], 2, 2); // I'll change this for credts_screen
     }
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
