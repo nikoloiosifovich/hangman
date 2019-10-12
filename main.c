@@ -169,6 +169,22 @@ void v_sprites(BITMAP *buffer, BITMAP *sprites[]){
   draw_sprite(buffer, sprites[5], sprites[2]->cr/2+sprites[4]->cr, sprites[0]->cb+sprites[1]->cb);
 }
 
+// --> ToShowInteractionsForMouseXKeyboard
+void interactions_mouse_v_keyboard(BITMAP *keys[], int sta_keys[][9], int start_x, int start_y){
+
+  for(i=0;i<3;i++){
+    for(j=0;j<9;j++){
+      if(mouse_x>start_x+40*j && mouse_x<start_x+40*(j+1) &&
+         mouse_y>start_y+40*i && mouse_y<start_y+40*(i+1) &&
+         mouse_b==1 && sta_keys[i][j]!=1){
+
+        sta_keys[i][j]=1;
+        keys[j+i*9] = (sta_keys[i][j] == 1) ? keys[26+(j+i*9)] : keys[j+i*9];
+      }
+    }
+  }
+}
+
 // --> Main Game
 int main(){
 
@@ -177,6 +193,7 @@ int main(){
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
   int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
   int posX_button = 60, posY_button = 325;
+  int sta_keys[3][9];
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
@@ -185,12 +202,19 @@ int main(){
   load_cursor(cursor);
   load_backgrounds(backgrounds);
 
+  for(i=0;i<3;i++){
+    for(j=0;j<9;j++){
+      sta_keys[i][j] = 0;
+    }
+  }
+
 
   // Loop Game
   while(!done){
 
     if(key[KEY_ESC]){ end(); }
 
+    interactions_mouse_v_keyboard(keys, sta_keys, posX_keyboard, posY_keyboard);
     v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
     v_buttons(buffer, buttons, posX_button, posY_button);
     v_sprites(buffer, sprites);
