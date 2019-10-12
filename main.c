@@ -10,7 +10,9 @@
 #include <stdlib.h>
 
 // Global vars
-int i, j, done = 0;
+int i, j;
+int done = 0;
+int status_screen = 0;
 
 // Functions
 // --> ToCloseGame
@@ -209,15 +211,21 @@ int main(){
   }
 
 
-  // Loop Game
+  // --> Main-Loop Game
   while(!done){
 
     if(key[KEY_ESC]){ end(); }
 
-    interactions_mouse_v_keyboard(keys, sta_keys, posX_keyboard, posY_keyboard);
-    v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
-    v_buttons(buffer, buttons, posX_button, posY_button);
-    v_sprites(buffer, sprites);
+    // --> screen: 0 menu["play", "cred"]
+    if(status_screen == 0){
+      clear(buffer);
+      draw_sprite(buffer, backgrounds[0], 2, 2);
+      v_buttons(buffer, buttons, posX_button, posY_button);
+    }
+
+    //interactions_mouse_v_keyboard(keys, sta_keys, posX_keyboard, posY_keyboard);
+    //v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
+    //v_sprites(buffer, sprites);
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
     update_screen(buffer);
