@@ -12,7 +12,7 @@
 #include <string.h>
 
 // Global vars
-int i, j;
+int i, j, z;
 int done = 0;
 int status_screen = 0;
 
@@ -238,9 +238,15 @@ int main(){
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
+  
   int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
   int posX_button = 60, posY_button = 325;
   int sta_keys[3][9];
+
+  char alfa[3][9] = {
+    "abcdefghi", "jklmnopqr", "stuvwxyz"
+  };
+  char show_spaces[10];
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
@@ -258,8 +264,12 @@ int main(){
   srand((unsigned)time(NULL));
   words_index();
   r_index = rand()%n_index;
-  if(r_index == 0){ r_index = rand()%n_index };
+  if(r_index == 0){ r_index = rand()%n_index; }
   search(r_index);
+
+  for(i=0;i<strlen(word);i++){
+    show_spaces[i] = '1';
+  }
 
   // --> Main-Loop Game
   while(!done){
@@ -281,7 +291,27 @@ int main(){
       v_sprites(buffer, sprites);
       v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
 
+      for(i=0;i<3;i++){
+        for(j=0;j<9;j++){
+          for(z=0;z<strlen(word);z++){
 
+            if(sta_keys[i][j] == 1){
+              if(word[z] == alfa[i][j]){
+
+                show_spaces[z] = '0';
+                if(z == 0) draw_sprite(buffer, keys[j+i*9], SCREEN_W/3, SCREEN_H/2);
+                else       draw_sprite(buffer, keys[j+i*9], (SCREEN_W/3)+40*z, SCREEN_H/2);
+              }
+            }else{
+              if(show_spaces[z] == '1'){
+
+                if(z == 0) draw_sprite(buffer, keys[52], SCREEN_W/3, SCREEN_H/2);
+                else       draw_sprite(buffer, keys[52], (SCREEN_W/3)+40*z, SCREEN_H/2);
+              }
+            }
+          }
+        }
+      }
     }else if(status_screen == 2){
       // --> screen_2: credts["Staff"]
       
