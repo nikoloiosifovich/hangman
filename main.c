@@ -176,7 +176,7 @@ int main(){
 
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
   int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
-  int posX_button = 0, posY_button = 0;
+  int posX_button = 60, posY_button = 325;
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
