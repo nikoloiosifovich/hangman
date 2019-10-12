@@ -8,6 +8,8 @@
 #include <allegro.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
 // Global vars
 int i, j;
@@ -253,6 +255,11 @@ int main(){
     }
   }
 
+  srand((unsigned)time(NULL));
+  words_index();
+  r_index = rand()%n_index;
+  if(r_index == 0){ r_index = rand()%n_index };
+  search(r_index);
 
   // --> Main-Loop Game
   while(!done){
