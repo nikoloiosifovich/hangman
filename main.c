@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 // Global vars
-int done = 0;
+int i, done = 0;
 
 // Functions
 // --> ToCloseGame
@@ -39,13 +39,32 @@ void update_screen(BITMAP *buffer){
   clear(buffer);
 }
 
+// --> ToLoadSprites
+void load_sprites(BITMAP *sprites[]){
+
+  char path_sprites[][23] = {
+    "src/sprites/live01.bmp", "src/sprites/live02.bmp",
+    "src/sprites/live03.bmp", "src/sprites/live04.bmp",
+    "src/sprites/live05.bmp", "src/sprites/live06.bmp",
+
+    "src/sprites/dead01.bmp", "src/sprites/dead02.bmp",
+    "src/sprites/dead03.bmp", "src/sprites/dead04.bmp",
+    "src/sprites/dead05.bmp", "src/sprites/dead06.bmp"
+  };
+  for(i=0;i<12;i++){
+    sprites[i] = load_bitmap(path_sprites[i], NULL);
+  }
+}
+
 // Main Game
 int main(){
 
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
-  BITMAP *buffer;
+  BITMAP *buffer, *sprites[13];
+
   buffer = create_bitmap(screen->w, screen->h);
+  load_sprites(sprites);
 
   // Loop Game
   while(!done){
