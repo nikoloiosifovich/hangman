@@ -12,7 +12,7 @@
 // Global vars
 int i, j;
 int done = 0;
-int status_screen = 2;
+int status_screen = 0;
 
 // Functions
 // --> ToCloseGame
@@ -154,6 +154,7 @@ void v_buttons(BITMAP *buffer, BITMAP *buttons[], int start_x, int start_y){
        mouse_y>start_y+45*i && mouse_y<start_y+40+(45*i)){
 
       draw_sprite(buffer, buttons[i+2], start_x, start_y+(45*i));
+      status_screen = (mouse_b == 1) ? (status_screen = i+1) : status_screen;
     }else{
       draw_sprite(buffer, buttons[i], start_x, start_y+(45*i));
     }
