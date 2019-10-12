@@ -58,6 +58,7 @@ void load_sprites(BITMAP *sprites[]){
 
 // --> ToLoadKeysForKeyboard
 void load_keys(BITMAP *keys[]){
+  
   char path_keys[][16] = {
     "src/keys/aN.bmp", "src/keys/bN.bmp", "src/keys/cN.bmp",
     "src/keys/dN.bmp", "src/keys/eN.bmp", "src/keys/fN.bmp",
@@ -86,12 +87,24 @@ void load_keys(BITMAP *keys[]){
   }
 }
 
-// Main Game
+// --> ToLoadButtons
+void load_buttons(BITMAP *buttons[]){
+
+  char path_buttons[][24] = {
+    "src/buttons/bt_play.bmp", "src/buttons/bt_cred.bmp",
+    "src/buttons/bt_plyH.bmp", "src/buttons/bt_crdH.bmp"
+  };
+  for(i=0;i<4;i++){
+    buttons[i] = load_bitmap(path_buttons[i], NULL);
+  }
+}
+
+// --> Main Game
 int main(){
 
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
-  BITMAP *buffer, *sprites[13], *keys[53];
+  BITMAP *buffer, *sprites[13], *keys[53], *buttons[4];
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
