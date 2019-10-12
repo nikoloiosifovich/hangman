@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 // Global vars
-int i, done = 0;
+int i, j, done = 0;
 
 // Functions
 // --> ToCloseGame
@@ -130,12 +130,27 @@ void v_mouse(BITMAP *buffer, BITMAP *cursor[], int mouse_x, int mouse_y){
   }
 }
 
+// --> ToDrawKeyboard
+void v_keyboard(BITMAP *buffer, BITMAP *keys[], int start_x, int start_y){
+
+  for(i=0;i<3;i++){
+    for(j=0;j<9;j++){
+      if(j==0){
+        draw_sprite(buffer, keys[j+i*9], start_x, start_y+40*i);
+      }else{
+        if(j+i*9 != 26) draw_sprite(buffer, keys[j+i*9], start_x+40*j, start_y+40*i);
+      }
+    }
+  }
+}
+
 // --> Main Game
 int main(){
 
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
+  int posX_keyboard = 0, posY_keyboard = 0;
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
@@ -150,6 +165,7 @@ int main(){
 
     if(key[KEY_ESC]){ end(); }
 
+    v_keyboard(buffer, keys, posX_keyboard, posY_keyboard);
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
     update_screen(buffer);
