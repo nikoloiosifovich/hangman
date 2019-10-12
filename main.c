@@ -13,23 +13,36 @@
 int done = 0;
 
 // Functions
-void end(){ done = 1; } // thats here for close the window
+// --> ToCloseGame
+void end(){ done = 1; }
 
+// --> ToRunAllegro
+void allegro_start(char *title, int width, int height){
 
-// Main Game
-int main(){
-
-  // Allegro Setup
   allegro_init();
   set_color_depth(24);
-  set_gfx_mode(GFX_AUTODETECT_WINDOWED, 640, 480, 0, 0);
-  set_window_title("Hangman v0.1 - @Nikölo");
+  set_gfx_mode(GFX_AUTODETECT_WINDOWED, width, height, 0, 0);
+  set_window_title(title);
   set_close_button_callback(end);
 
   install_keyboard();
   install_mouse();
   install_timer();
   install_sound(DIGI_AUTODETECT, MIDI_AUTODETECT, NULL);
+}
+
+// --> ToDrawAllOnScreen
+void update_screen(BITMAP *buffer){
+
+  draw_sprite(screen, buffer, 0, 0);
+  rest(10);
+  clear(buffer);
+}
+
+// Main Game
+int main(){
+
+  allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
   BITMAP *buffer;
   buffer = create_bitmap(screen->w, screen->h);
@@ -39,9 +52,8 @@ int main(){
 
     if(key[KEY_ESC]){ end(); }
 
-    draw_sprite(screen, buffer, 0, 0);
-    rest(10);
-    clear(buffer);
+
+    update_screen(buffer);
   }
 
   return 0;
