@@ -150,7 +150,7 @@ int main(){
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
-  int posX_keyboard = 0, posY_keyboard = 0;
+  int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
