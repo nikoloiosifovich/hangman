@@ -122,6 +122,14 @@ void load_backgrounds(BITMAP *backgrounds[]){
   }
 }
 
+// --> ToChangeMouseCursorSysForMouseGameSprite
+void v_mouse(BITMAP *buffer, BITMAP *cursor[], int mouse_x, int mouse_y){
+
+  for(i=0;i<1;i++){
+    draw_sprite(buffer, cursor[i], mouse_x, mouse_y);
+  }
+}
+
 // --> Main Game
 int main(){
 
@@ -143,6 +151,7 @@ int main(){
     if(key[KEY_ESC]){ end(); }
 
 
+    v_mouse(buffer, cursor, mouse_x, mouse_y);
     update_screen(buffer);
   }
 
