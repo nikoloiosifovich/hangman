@@ -99,15 +99,30 @@ void load_buttons(BITMAP *buttons[]){
   }
 }
 
+// --> ToLoadMouseAsSprite
+void load_cursor(BITMAP *mouse[]){
+
+  char path_mouse_cursor[][23] = {
+    "src/sprites/cursor.bmp"
+  };
+  for(i=0;i<1;i++){
+    mouse[i] = load_bitmap(path_mouse_cursor[i], NULL);
+  }
+}
+
 // --> Main Game
 int main(){
 
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
-  BITMAP *buffer, *sprites[13], *keys[53], *buttons[4];
+  BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1];
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
+  load_keys(keys);
+  load_buttons(buttons);
+  load_cursor(cursor);
+  
 
   // Loop Game
   while(!done){
