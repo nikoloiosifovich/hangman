@@ -110,19 +110,32 @@ void load_cursor(BITMAP *mouse[]){
   }
 }
 
+// --> ToLoadStagesBackgrounds
+void load_backgrounds(BITMAP *backgrounds[]){
+
+  char path_backgrounds[][19] = {
+    "src/bgs/tela01.bmp", "src/bgs/tela02.bmp", 
+    "src/bgs/tela03.bmp", "src/bgs/tela04.bmp"
+  };
+  for(i=0;i<4;i++){
+    backgrounds[i] = load_bitmap(path_backgrounds[i], NULL);
+  }
+}
+
 // --> Main Game
 int main(){
 
   allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
 
-  BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1];
+  BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
 
   buffer = create_bitmap(screen->w, screen->h);
   load_sprites(sprites);
   load_keys(keys);
   load_buttons(buttons);
   load_cursor(cursor);
-  
+  load_backgrounds(backgrounds);
+
 
   // Loop Game
   while(!done){
