@@ -1,10 +1,10 @@
-# Hangman : That's a game ;b
+# Hangman : Hey! This is a game, man. ;b
 
 ![alt text](https://raw.githubusercontent.com/nikoloiosifovich/hangman/master/src/img/screen.png "Main Game Scree")
 ***
 Projeto desenvolvido em **linguagem C** com recursos da biblioteca
-[**Allegro4**](https://www.allegro.cc), com o intuito de aprimorar
-meus conhecimentos na linguagem citada.
+[**Allegro4**](https://www.allegro.cc) e com o intuito de aprimorar
+meus conhecimentos.
 
 > That's a 4Fun Project! :D
 
