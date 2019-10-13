@@ -15,6 +15,8 @@
 int i, j, z;
 int done = 0;
 int status_screen = 0;
+int on_off = 1;
+int mouse_count_click = 0;
 
 // Functions
 // --> ToCloseGame
@@ -183,7 +185,9 @@ void interactions_mouse_v_keyboard(BITMAP *keys[], int sta_keys[][9], int start_
          mouse_y>start_y+40*i && mouse_y<start_y+40*(i+1) &&
          mouse_b==1 && sta_keys[i][j]!=1){
 
-        sta_keys[i][j]=1;
+        sta_keys[i][j] = 1;
+        mouse_count_click++;
+        on_off = 1;
         keys[j+i*9] = (sta_keys[i][j] == 1) ? keys[26+(j+i*9)] : keys[j+i*9];
       }
     }
@@ -241,7 +245,9 @@ int main(){
   
   int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
   int posX_button = 60, posY_button = 325;
-  int sta_keys[3][9];
+  int sta_keys[3][9], sta_sprites[6];
+  int n_tentativas;
+  int c = 0, aux1 = 0, aux2 = 0, c_sprite = 6;
 
   char alfa[3][9] = {
     "abcdefghi", "jklmnopqr", "stuvwxyz"
@@ -254,6 +260,10 @@ int main(){
   load_buttons(buttons);
   load_cursor(cursor);
   load_backgrounds(backgrounds);
+
+  for(i=0;i<6;i++){
+    sta_sprites[i] = 0;
+  }
 
   for(i=0;i<3;i++){
     for(j=0;j<9;j++){
@@ -270,6 +280,12 @@ int main(){
   for(i=0;i<strlen(word);i++){
     show_spaces[i] = '1';
   }
+
+  n_tentativas = strlen(word) * 1.5;
+
+  // DEBUG:
+  printf("DEBUG --> t: %d\n", n_tentativas);
+  printf("DEBUG --> word: %s\n", word);
 
   // --> Main-Loop Game
   while(!done){
@@ -312,11 +328,50 @@ int main(){
           }
         }
       }
+
+      if(on_off == 1){
+        aux1 = c;
+        c = 0;
+
+        for(i=0;i<strlen(word);i++){
+          if(show_spaces[i] == '0'){
+            c++;
+          }
+        }
+
+        aux2 = c;
+        if(aux1 == aux2 && c_sprite > -1){
+
+          printf("DEBUG --> aux1:%d aux2:%d c:%d\n", aux1, aux2, c);
+          sprites[c_sprite] = sprites[c_sprite+5];
+          c_sprite--;
+        }
+
+        if(mouse_count_click <= n_tentativas && c == strlen(word)){
+          status_screen = 3;
+        }else{
+          if(mouse_count_click == n_tentativas && c < strlen(word)){
+            status_screen = 4;
+          }
+        }
+        on_off = 0;
+      }
+
     }else if(status_screen == 2){
       // --> screen_2: credts["Staff"]
       
       clear(buffer);
       draw_sprite(buffer, backgrounds[1], 2, 2); // I'll change this for credts_img
+    }else if(status_screen == 3){
+      // --> screen_3: WIN!
+      
+      clear(buffer);
+      draw_sprite(buffer, backgrounds[2], 2, 2);
+    }else if(status_screen == 4){
+      // --> screen_4: LOSS!
+      
+      clear(buffer);
+      draw_sprite(buffer, backgrounds[3], 2, 2);
     }
 
     v_mouse(buffer, cursor, mouse_x, mouse_y);
