@@ -20,5 +20,16 @@ Neste projeto você encontrará:
 * [X] Efeitos sonoros (Yeah!Baby...)
 * [X] etc... 
 
+Linha de comando para compilação em ambiente **_Arch Linux_**, infelizmente
+não sei como funciona em IOS ou Windows.
+
+> $ gcc main.c -o hangman -lalleg
+
+Para rodar basta rolar o comando:
+
+> $ ./hangman
+
+## That's all folks! ;b
+
 Um agradecimento em especial ao *__hangman__* deste projeto:
 > Valew Marcus AKA Leprechaun!... (não cobre direitos de imagem)
