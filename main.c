@@ -128,6 +128,17 @@ void load_backgrounds(BITMAP *backgrounds[]){
   }
 }
 
+void load_sounds(SAMPLE *samples[]){
+
+  char path_samples[][23] = {
+    "src/sounds/abert_s.wav", "src/sounds/errou_s.wav",
+    "src/sounds/creds_s.wav"
+  };
+  for(i=0;i<3;i++){
+    samples[i] = load_sample(path_samples[i]);
+  }
+}
+
 // --> ToChangeMouseCursorSysForMouseGameSprite
 void v_mouse(BITMAP *buffer, BITMAP *cursor[], int mouse_x, int mouse_y){
 
@@ -239,10 +250,11 @@ void search(int n){
 // --> Main Game
 int main(){
 
-  allegro_start("Hangman v0.1 - @Nikölo", 640, 480);
+  allegro_start("Hangman - @Nikölo", 640, 480);
 
   BITMAP *buffer, *sprites[13], *keys[53], *buttons[4], *cursor[1], *backgrounds[4];
-  
+  SAMPLE *samples[3];
+
   int posX_keyboard = SCREEN_W/3, posY_keyboard = (SCREEN_H/3)*2;
   int posX_button = 60, posY_button = 325;
   int sta_keys[3][9], sta_sprites[6];
@@ -260,6 +272,7 @@ int main(){
   load_buttons(buttons);
   load_cursor(cursor);
   load_backgrounds(backgrounds);
+  load_sounds(samples);
 
   for(i=0;i<6;i++){
     sta_sprites[i] = 0;
@@ -284,9 +297,10 @@ int main(){
   n_tentativas = strlen(word) * 1.5;
 
   // DEBUG:
-  printf("DEBUG --> t: %d\n", n_tentativas);
-  printf("DEBUG --> word: %s\n", word);
+  //printf("DEBUG --> t: %d\n", n_tentativas);
+  //printf("DEBUG --> word: %s\n", word);
 
+  play_sample(samples[0], 255, 256, 1000, 0);
   // --> Main-Loop Game
   while(!done){
 
@@ -342,15 +356,19 @@ int main(){
         aux2 = c;
         if(aux1 == aux2 && c_sprite > -1){
 
-          printf("DEBUG --> aux1:%d aux2:%d c:%d\n", aux1, aux2, c);
+          // DEBUG:
+          //printf("DEBUG --> aux1:%d aux2:%d c:%d c_sprite:%d\n", aux1, aux2, c, c_sprite);
           sprites[c_sprite] = sprites[c_sprite+5];
           c_sprite--;
+          if(c_sprite < 5){
+            play_sample(samples[1], 255, 256, 1000, 0);
+          }
         }
 
         if(mouse_count_click <= n_tentativas && c == strlen(word)){
           status_screen = 3;
         }else{
-          if(mouse_count_click == n_tentativas && c < strlen(word)){
+          if((mouse_count_click == n_tentativas && c < strlen(word)) || c_sprite == -1){
             status_screen = 4;
           }
         }
